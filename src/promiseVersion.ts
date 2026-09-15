@@ -71,3 +71,32 @@ fetchData(weatherUrl)
 
 console.log("Weather request started.");
 console.log("Process continues...");
+
+// PROMISE.ALL()
+// Weather and news do not depend on each other, so we can start both requests at the same time.
+
+console.log("\n\n--------------------------");
+console.log("PROMISE.ALL() EXAMPLE");
+console.log("------------------------------");
+
+console.log("Starting weather and news requests...");
+
+Promise.all([fetchData(weatherUrl), fetchData(newsUrl),])
+  .then(([weatherData, newsData]) => {
+    const weather: WeatherData = JSON.parse(weatherData);
+    const news: NewsResponse = JSON.parse(newsData);
+
+    console.log("\n--- WEATHER ---");
+    console.log(`Temperature: ${weather.current.temperature_2m}°C`);
+    console.log(`Weather code: ${weather.current.weather_code}`);
+
+    console.log("\n--- NEWS HEADLINES ---");
+
+    news.posts.slice(0, 5).forEach((post) => {
+      console.log(`- ${post.title}`);
+    });
+    console.log("\nPromise.all() completed.");
+  })
+  .catch((error: Error) => {
+    console.error("\nPromise.all() error:", error.message);
+  });
