@@ -100,3 +100,43 @@ Promise.all([fetchData(weatherUrl), fetchData(newsUrl),])
   .catch((error: Error) => {
     console.error("\nPromise.all() error:", error.message);
   });
+
+ // PROMISE.RACE()
+ // Both requests start at the same time.
+ // The first Promise to resolve or reject wins the race.
+ 
+console.log("\n\n----------------------");
+console.log("PROMISE.RACE() EXAMPLE");
+console.log("--------------------------");
+
+console.log("Starting weather and news race...");
+
+const weatherRace = fetchData(weatherUrl).then((data) => {
+const weather: WeatherData = JSON.parse(data);
+
+  return {
+    source: "Weather",
+    result: `Temperature: ${weather.current.temperature_2m}°C`,
+  };
+});
+
+const newsRace = fetchData(newsUrl).then((data) => {
+const news: NewsResponse = JSON.parse(data);
+
+  return {
+    source: "News",
+    result: `First headline: ${news.posts[0]?.title}`,
+  };
+});
+
+Promise.race([weatherRace, newsRace])
+  .then((winner) => {
+    console.log("\n--- RACE WINNER ---");
+    console.log(`Winner: ${winner.source}`);
+    console.log(winner.result);
+
+    console.log("\nPromise.race() completed.");
+  })
+  .catch((error: Error) => {
+    console.error("\nPromise.race() error:", error.message);
+  });
