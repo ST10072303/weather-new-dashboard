@@ -94,13 +94,13 @@ npm install
 The project contains separate commands for each asynchronous programming approach.
 The application asks the user to enter a city name.
 
- Command                Description
+-Commands and Description
  
-`npm run callback`      Runs the callback implementation
-`npm run promise`       Runs the Promise implementation
-`npm run async`         Runs the Async/Await implementation
-`npm run dev`           Runs the Async/Await version using Nodemon
-`npm run build`         Compiles the TypeScript project
+- npm run callback      Runs the callback implementation
+- npm run promise       Runs the Promise implementation
+- npm run async         Runs the Async/Await implementation
+- npm run dev           Runs the Async/Await version using Nodemon
+- npm run build         Compiles the TypeScript project
 
 
 ### Example Output
