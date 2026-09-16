@@ -25,11 +25,8 @@ const latitude = -23.4013;
 const longitude = 29.4179;
 
 // Open-Meteo weather API
-const weatherUrl =
-    `https://api.open-meteo.com/v1/forecast` +
-    `?latitude=${latitude}` +
-    `&longitude=${longitude}` +
-    `&current=temperature_2m,weather_code`;
+const weatherUrl = `https://api.open-meteo.com/v1/forecast` + `?latitude=${latitude}` +
+    `&longitude=${longitude}` + `&current=temperature_2m,weather_code`;
 
 // DummyJSON posts API
 const newsUrl = "https://dummyjson.com/posts";
@@ -57,7 +54,6 @@ fetchData(weatherUrl, (weatherError, weatherData) => {
         console.log(`Weather code: ${weather.current.weather_code}`);
         console.log("\nWeather request completed.");
         console.log("Now fetching news data...");
-
         // Second asynchronous request is nested inside the weather callback.
         fetchData(newsUrl, (newsError, newsData) => {
             if (newsError) {
