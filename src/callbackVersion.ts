@@ -4,18 +4,21 @@ import type { WeatherData, NewsResponse } from "./types.js";
 // fetches data from a URL using Node.js https.
 // function demonstrates a callback-based
 // approach to asynchronous programming.
-function fetchData(url: string, callback: (error: Error | null, data: string | null) => void): void {
-    https.get(url, (response) => {
-        let data = "";
-
-        // receive data chunks from the server
-        response.on("data", (chunk: Buffer) => {data += chunk.toString();
-        });
-
-        // complete response has been received
-        response.on("end", () => {callback(null, data);
-        });
-    })
+function fetchData(url: string, callback: (error: Error | null, data: string | null) => void
+): void {https.get(url, (response) => {let data = "";
+            // Check for HTTP errors
+            if (response.statusCode && response.statusCode >= 400) {
+                callback(
+                    new Error(`Request failed with status code ${response.statusCode}`),null);
+                return;
+            }
+            response.on("data", (chunk: Buffer) => {data += chunk.toString();
+            });
+            response.on("end", () => {callback(null, data);
+            });
+            response.on("error", (error) => {callback(error, null);
+            });
+        })
         .on("error", (error) => {callback(error, null);
         });
 }
